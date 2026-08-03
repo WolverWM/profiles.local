@@ -1,0 +1,4 @@
+[profiles.local]
+web_engine = Apache
+php_engine = PHP-7.4
+public_dir = {base_dir}

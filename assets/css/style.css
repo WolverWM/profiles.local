@@ -1,0 +1,1002 @@
+/* ============================================================
+   style.css — Profiles
+   Стиль: Frutiger Aero / Glassmorphism, шрифт Inter
+   ============================================================ */
+
+* { box-sizing: border-box; }
+
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    color: var(--text-color, #fff);
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--primary-color, #00BCD4), var(--bg-color, #006064));
+    background-attachment: fixed;
+}
+
+a { text-decoration: none; color: inherit; }
+img { max-width: 100%; display: block; }
+button { font-family: inherit; }
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px 40px;
+}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 10px 20px;
+    margin: 16px 0 28px;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 24px;
+    flex-wrap: wrap;
+}
+
+.nav-avatar img {
+    width: 56px !important;
+    height: 56px !important;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    transition: transform 0.3s;
+}
+.nav-avatar img:hover { transform: scale(1.06); }
+
+.nav-center, .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+nav a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 40px;
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--text-color, #fff) !important;
+    transition: background 0.3s, transform 0.2s;
+    white-space: nowrap;
+}
+nav a:hover { background: rgba(255, 255, 255, 0.18); }
+nav a.active {
+    background: var(--button-color, #26c6da) !important;
+    color: var(--button-text-color, var(--text-color, #fff)) !important;
+}
+
+/* ============================================================
+   GLASSMORPHISM CARDS / общие компоненты
+   ============================================================ */
+.glass-card,
+.post-card,
+.text-block-card,
+.profile-header,
+.settings-form,
+.create-post-inline,
+.search-bar,
+form.auth-form,
+.modal,
+.follow-card,
+.error-page {
+    background: rgba(255, 255, 255, 0.14);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 22px;
+    transition: box-shadow 0.3s, transform 0.3s;
+}
+
+h1, h2, h3 { font-weight: 700; margin: 0 0 12px; }
+h1 { font-size: 30px; }
+h2 { font-size: 26px; }
+h3 { font-size: 20px; }
+
+.btn, button, form button, .settings-form button, .create-post-inline button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--button-color, #26c6da);
+    /* Цвет текста на кнопках — отдельная настройка (--button-text-color), а не
+       общий --text-color: кнопка залита сплошным --button-color, и на нём нужен
+       свой, независимо подбираемый контраст (см. личный кабинет). */
+    color: var(--button-text-color, var(--text-color, #fff));
+    border: none;
+    padding: 11px 26px;
+    border-radius: 40px;
+    font-weight: 500;
+    font-size: 15px;
+    cursor: pointer;
+    transition: filter 0.3s, transform 0.2s, box-shadow 0.3s;
+}
+.btn:hover, button:hover { filter: brightness(0.9); box-shadow: 0 0 16px rgba(255,255,255,0.35); }
+.btn:active, button:active { transform: scale(0.97); }
+.btn-secondary { background: rgba(255,255,255,0.2) !important; }
+.btn-text { background: none; color: var(--text-color, #fff); opacity: 0.75; padding: 11px 16px; }
+.btn-text:hover { opacity: 1; filter: none; box-shadow: none; }
+
+.field-hint { font-size: 13px; opacity: 0.7; margin: -6px 0 12px; }
+
+/* ============================================================
+   ALERTS
+   ============================================================ */
+.alert, .success {
+    padding: 12px 20px;
+    border-radius: 18px;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+.alert.success, .success { background: rgba(46, 125, 50, 0.25); color: #c8f5cb; }
+.alert.error { background: rgba(198, 40, 40, 0.25); color: #ffcdd2; }
+
+/* ============================================================
+   ФОРМЫ (общие)
+   ============================================================ */
+form input[type="text"],
+form input[type="email"],
+form input[type="password"],
+form input[type="url"],
+form input[type="file"],
+form textarea,
+form select {
+    width: 100%;
+    padding: 12px 18px;
+    border-radius: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.15);
+    color: var(--text-color, #fff);
+    font-family: inherit;
+    font-size: 15px;
+    margin-bottom: 14px;
+}
+form textarea { border-radius: 20px; min-height: 90px; resize: vertical; }
+/* У <select> без appearance: none браузер поверх нашего стеклянного фона
+   рисует свою собственную стрелку — она не оформляется через CSS и
+   выбивается из общего дизайна. appearance: none убирает её полностью,
+   а свою стрелку рисуем через background-image (SVG-шеврон). */
+form select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding-right: 42px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 14px;
+    cursor: pointer;
+}
+/* Кнопка "Выбрать файл" у input[type=file] — по умолчанию рисуется браузером
+   и не совпадает со стилем сайта. ::file-selector-button позволяет
+   перекрасить именно эту кнопку (поддерживается Chrome/Edge/Firefox);
+   ::-webkit-file-upload-button — то же самое для старых Safari/Chrome. */
+form input[type="file"]::file-selector-button,
+form input[type="file"]::-webkit-file-upload-button {
+    background: var(--button-color, #26c6da);
+    /* Кнопка залита --button-color, поэтому текст на ней должен брать
+       --button-text-color (как и остальные кнопки сайта), а не общий
+       --text-color — иначе при контрастных цветах кнопки текст было бы плохо видно */
+    color: var(--button-text-color, var(--text-color, #fff));
+    border: none;
+    border-radius: 20px;
+    padding: 8px 18px;
+    margin-right: 12px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: filter 0.3s;
+}
+form input[type="file"]::file-selector-button:hover,
+form input[type="file"]::-webkit-file-upload-button:hover {
+    filter: brightness(0.9);
+}
+form input::placeholder, form textarea::placeholder { color: currentColor; opacity: 0.55; }
+form input:focus, form textarea:focus, form select:focus {
+    outline: none;
+    border-color: rgba(255,255,255,0.5);
+    box-shadow: 0 0 0 4px rgba(255,255,255,0.08);
+}
+form select option { color: #1a1a2e; }
+form label { display: block; font-size: 14px; font-weight: 500; margin-bottom: 6px; opacity: 0.85; }
+.checkbox-group label { display: flex; align-items: center; gap: 10px; cursor: pointer; font-weight: 400; }
+.checkbox-group input[type="checkbox"] { width: auto; margin: 0; }
+
+/* Клиентская (JS) валидация форм — assets/js/validate.js */
+.field-invalid {
+    border-color: #ff6b6b !important;
+    box-shadow: 0 0 0 3px rgba(255,107,107,0.25) !important;
+}
+.field-error {
+    display: block;
+    color: #ffb3b3;
+    font-size: 13px;
+    margin: -8px 0 12px;
+}
+
+/* ============================================================
+   AUTH PAGES (login / register / edit_post)
+   ============================================================ */
+.auth-page { max-width: 440px; margin: 20px auto; }
+.auth-form { padding: 28px; }
+.auth-switch { text-align: center; margin-top: 16px; font-size: 14px; opacity: 0.85; }
+.auth-switch a { text-decoration: underline; font-weight: 600; }
+
+/* ============================================================
+   FEED CONTROLS: поиск + фильтры
+   ============================================================ */
+.feed-controls {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.search-bar {
+    flex: 1 1 260px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 18px;
+}
+.search-bar input {
+    flex: 1;
+    border: none !important;
+    background: transparent !important;
+    color: var(--text-color, #fff) !important;
+    /* В части WebKit-браузеров цвет введённого текста в некоторых состояниях
+       (например, автозаполнение) рисуется через -webkit-text-fill-color, а не
+       через обычный color, и без этого свойства мог бы остаться серым по
+       умолчанию браузера, даже если color переопределён */
+    -webkit-text-fill-color: var(--text-color, #fff);
+    font-size: 15px;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+.search-bar input:focus { outline: none; box-shadow: none; }
+
+.filter-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+.filter-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    /* Кнопки фильтра — такие же кнопки, как и остальные на сайте, поэтому
+       следуют отдельному цвету текста кнопок, а не общему цвету шрифта темы */
+    color: var(--button-text-color, var(--text-color, #fff));
+    padding: 9px 18px;
+    border-radius: 40px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+.filter-btn:hover { background: rgba(255, 255, 255, 0.2); }
+.filter-btn.active { background: var(--button-color, #26c6da); border-color: transparent; }
+
+/* ============================================================
+   SLIDER (задание 2.3)
+   ============================================================ */
+.slider-container {
+    display: flex;
+    /* justify-content: center здесь НЕ ставим (сознательно) — при обычном
+       overflow-x: auto с бо́льшим числом карточек, чем помещается (9 вместо
+       видимых 5), центрирование overflow-содержимого во flex-контейнере
+       сдвигает первую карточку в ОТРИЦАТЕЛЬНУЮ, недостижимую обычной
+       прокруткой вправо позицию — scrollLeft: 0 показывал бы уже середину
+       списка, а не начало. По умолчанию (flex-start) первая карточка стоит
+       у левого края уже при scrollLeft: 0, и автопрокрутка вправо корректно
+       проходит все 9 карточек до конца. */
+    gap: 14px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 6px 6px 18px;
+    margin: 0 auto 26px;
+    /* Ровно 5 карточек в ряд: 5 × 200px (ширина .slide) + 4 × 14px (gap) =
+       1056px. Остальные (всего в слайдере до 9 постов) докручиваются
+       автопрокруткой (см. initSlider() в main.js) — контейнер не резиновый
+       на всю ширину .container (1200px), а нарочно уже, чтобы "видно ровно
+       5" было верно на любом широком экране, а не только случайно. */
+    max-width: 1060px;
+    scrollbar-width: thin;
+    /* Полупрозрачные "затухающие" края (задание — как и раньше, крайние
+       посты видимой области полупрозрачны). Раньше это делалось через
+       opacity на :first-child/:last-child — работало, только пока слайдер
+       не прокручивался (край экрана и край списка совпадали). Теперь, когда
+       слайдер прокручивается и видимые "крайние" посты каждый раз разные,
+       статичный :first-child/:last-child перестал бы соответствовать
+       реально видимым краям. Маска на самом контейнере затемняет то, что
+       физически ближе к левому/правому краю ВИДИМОЙ области, независимо от
+       текущей позиции прокрутки — то есть работает правильно при любом шаге. */
+    -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+}
+.slider-container::-webkit-scrollbar { height: 6px; }
+.slider-container::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 10px; }
+
+.slide {
+    position: relative;
+    flex: 0 0 200px;
+    height: 240px;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: transform 0.3s;
+}
+.slide:hover { transform: scale(1.03); }
+.slide img { width: 100%; height: 100%; object-fit: cover; }
+.slide-username {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 10px;
+    background: linear-gradient(to top, rgba(0,0,0,0.75), transparent);
+    color: #fff !important;
+    font-size: 13px;
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+.slide:hover .slide-username { opacity: 1; }
+
+/* ============================================================
+   CREATE POST INLINE
+   ============================================================ */
+.create-post-inline { padding: 22px; margin-bottom: 24px; }
+
+/* ============================================================
+   POSTS GRID (лента — 3 колонки, задание 2.3 / 2.4)
+   ============================================================ */
+.posts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 20px;
+}
+/* Размеры сетки профиля (задание 2.4 / 2.6).
+   Число колонок задаётся ЯВНО (repeat(N, 1fr)), а не через
+   auto-fit/minmax. С auto-fit количество реальных колонок само
+   схлопывается до числа карточек — если постов меньше, чем
+   помещается в ряд при ЛЮБОМ из размеров (частый случай на
+   тестовых данных с 2-3 постами), маленькая и большая сетка
+   выглядели одинаково, и разница в размере была не видна.
+   Фиксированное число колонок не зависит от количества карточек —
+   размер сетки теперь всегда виден, даже если постов немного
+   (в последнем ряду просто остаётся пустое место — это нормально). */
+.posts-grid.grid-small {
+    grid-template-columns: repeat(4, 1fr);
+}
+.posts-grid.grid-medium {
+    grid-template-columns: repeat(3, 1fr);
+}
+.posts-grid.grid-large {
+    grid-template-columns: repeat(2, 1fr);
+}
+.posts-grid.grid-small .post-card,
+.posts-grid.grid-small .text-block-card { min-height: 150px; }
+.posts-grid.grid-medium .post-card,
+.posts-grid.grid-medium .text-block-card { min-height: 180px; }
+.posts-grid.grid-large .post-card,
+.posts-grid.grid-large .text-block-card { min-height: 220px; }
+
+.empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px 20px;
+    opacity: 0.65;
+    font-size: 15px;
+}
+
+.post-card {
+    padding: 16px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+}
+.post-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25), 0 0 20px rgba(255,255,255,0.15);
+}
+.post-card.dragging { opacity: 0.4; }
+
+.post-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+.post-header img {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.post-header a {
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--text-color, #fff);
+}
+.post-header a:hover { text-decoration: underline; }
+.post-header span { margin-left: auto; font-size: 12px; opacity: 0.65; }
+
+.post-body h3 { font-size: 16px; font-weight: 600; margin: 0 0 6px; }
+.post-body p { font-size: 15px; line-height: 1.45; margin: 0 0 10px; opacity: 0.9; word-break: break-word; }
+.post-image {
+    width: 100%;
+    max-height: 260px;
+    object-fit: cover;
+    border-radius: 14px;
+    /* Отступ снизу, чтобы картинка не прилипала к футеру с лайком */
+    margin-bottom: 16px;
+}
+.post-card-image-only .post-body { padding: 0; }
+/* Раньше здесь стоял margin-bottom: 0 — из-за этого в режиме "только
+   изображение" картинка вплотную упиралась в кнопку лайка */
+.post-card-image-only .post-image { margin-bottom: 12px; max-height: 320px; }
+
+.post-footer {
+    margin-top: auto;
+    padding-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.like-btn, .like-static {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
+    color: var(--text-color, #fff);
+    font-size: 15px;
+    cursor: pointer;
+    opacity: 0.85;
+    padding: 0;
+}
+.like-btn:hover { opacity: 1; }
+.like-btn .liked, .like-btn .fas.liked { color: #ff6b6b; }
+.like-static { cursor: default; opacity: 0.55; }
+
+/* ============================================================
+   ТЕКСТОВЫЕ БЛОКИ (задание 2.4)
+   ============================================================ */
+.text-block-card {
+    position: relative;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-style: italic;
+    font-size: 14px;
+    line-height: 1.5;
+    background: rgba(255, 255, 255, 0.08);
+}
+.text-block-card i { opacity: 0.4; margin-bottom: 8px; }
+.text-block-card.dragging { opacity: 0.4; }
+
+/* Кнопка удаления текстовой заметки (крестик в углу карточки).
+   По умолчанию спрятана (opacity: 0) и появляется только при наведении
+   на саму карточку — задание "чтобы не создавать визуальный шум". */
+.block-delete-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    color: var(--text-color, #fff);
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.25s, background 0.3s;
+}
+/* Показываем крестик, когда курсор над карточкой (не только над самой кнопкой) */
+.text-block-card:hover .block-delete-btn,
+.text-block-card:focus-within .block-delete-btn {
+    opacity: 0.85;
+}
+.block-delete-btn:hover {
+    opacity: 1;
+    background: rgba(198, 40, 40, 0.6);
+}
+/* На сенсорных экранах наведения не бывает — держим кнопку видимой всегда,
+   иначе с телефона/планшета заметку было бы невозможно удалить */
+@media (hover: none) {
+    .block-delete-btn { opacity: 0.7; }
+}
+
+.grid-hint { font-size: 13px; opacity: 0.6; text-align: center; margin-top: 8px; }
+
+/* ============================================================
+   PROFILE HEADER (задание 2.4)
+   ============================================================ */
+.profile-header {
+    position: relative;
+    /* обрезаем фон-картинку по скруглённым углам карточки (border-radius
+       задан общим правилом для .glass-card/.profile-header выше) */
+    overflow: hidden;
+    display: flex;
+    gap: 26px;
+    padding: 30px;
+    margin-bottom: 26px;
+    /* center (а не flex-start) — аватар теперь вертикально центрирован
+       относительно всей строки, а не прижат к верхнему краю, когда
+       центральная колонка (.profile-info) выше него по содержимому */
+    align-items: center;
+    flex-wrap: wrap;
+}
+/* Фоновое изображение карточки профиля (задание "Фон карточки профиля").
+   Реализовано отдельным слоем ::before, а не через background-image
+   самого .profile-header — так изображение можно сделать полупрозрачным
+   (opacity 0.2, то есть в требуемом диапазоне ~0.3–0.4), не затрагивая
+   прозрачность текста и кнопок внутри карточки. Обычный полупрозрачный
+   белый фон карточки (rgba(255,255,255,0.14) из общего .glass-card
+   правила) остаётся под этим слоем и работает как раз той самой "белой
+   подложкой", которая не даёт цветам фотографии исказить стеклянный
+   эффект — картинка выглядит выцветшей и не спорит с текстом.
+   Если --profile-bg-image не задана инлайн-стилем (изображение не
+   загружено), background-image равен none, и слой ничего не рисует —
+   карточка остаётся на обычном цветовом фоне, как и раньше. */
+.profile-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: var(--profile-bg-image, none);
+    background-size: cover;
+    background-position: center;
+    opacity: 0.2;
+    z-index: 0;
+    pointer-events: none;
+}
+.profile-header > * {
+    position: relative;
+    z-index: 1;
+}
+.profile-avatar {
+    /* Увеличен со 120px до 150px, а затем до 180px (задание «Раскладка шапки
+       профиля») — крупный аватар слева уравновешивает колонку соцссылок/
+       Telegram справа. */
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid rgba(255, 255, 255, 0.4);
+    flex-shrink: 0;
+}
+/* margin-left (в дополнение к общему gap у .profile-header) — сдвигает
+   основной текст чуть правее от аватара, чтобы раскладка выглядела более
+   сбалансированной, не влияя при этом на отступ до правой колонки */
+.profile-info { flex: 1; min-width: 240px; margin-left: 14px; }
+
+/* Правая колонка шапки профиля — соцссылки + Telegram (задание "Telegram-интеграция").
+   flex-shrink: 0 и фиксированная ширина не дают ей сжиматься, когда центральная
+   колонка (.profile-info) занимает всё свободное место через flex: 1. */
+.profile-side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    flex: 0 0 auto;
+    /* Ширина увеличена со 150px, чтобы пять иконок соцсетей помещались в
+       один ряд, не перенося часть из них на вторую строку (см. ниже). */
+    width: 270px;
+}
+/* Иконки соцсетей увеличены только в этой колонке (а не во всём .social-links
+   глобально) — по просьбе заказчика. Размер и зазор подобраны так, чтобы все
+   пять иконок гарантированно помещались в один ряд при ширине колонки 270px:
+   5 × 40px + 4 × 12px зазора = 248px. */
+.profile-side .social-links {
+    margin-bottom: 0;
+    justify-content: center;
+    gap: 12px;
+}
+.profile-side .social-links a { width: 40px; height: 40px; font-size: 16px; }
+.telegram-username {
+    font-size: 14px;
+    font-weight: 500;
+    opacity: 0.9;
+    margin: 0;
+    text-align: center;
+    word-break: break-all;
+}
+.telegram-qr-img {
+    /* Белая подложка с отступом — на случай, если у загруженного QR-кода
+       прозрачный фон (PNG): без неё картинка на цветном фоне карточки могла
+       бы не считываться камерой телефона. Размер увеличен со 110px по
+       просьбе заказчика. */
+    width: 140px;
+    height: 140px;
+    object-fit: contain;
+    background: #fff;
+    padding: 8px;
+    border-radius: 12px;
+}
+.profile-name-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.profile-name-row h1 { margin: 0; font-size: 26px; }
+
+.status-badge {
+    display: inline-block;
+    padding: 4px 14px;
+    border-radius: 40px;
+    font-size: 12px;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.2);
+}
+.badge-active { background: rgba(76, 175, 80, 0.35); }
+.badge-looking { background: rgba(255, 193, 7, 0.35); }
+.badge-vacation { background: rgba(3, 169, 244, 0.35); }
+.badge-freelance { background: rgba(156, 39, 176, 0.35); }
+.badge-student { background: rgba(255, 87, 34, 0.35); }
+
+.profession { font-size: 14px; font-style: italic; opacity: 0.85; margin: 6px 0 0; }
+.bio { font-size: 15px; margin: 8px 0 14px; opacity: 0.9; }
+
+.stats { display: flex; gap: 20px; font-size: 14px; margin-bottom: 8px; flex-wrap: wrap; opacity: 0.9; }
+.subscription-links { display: flex; gap: 18px; margin-bottom: 10px; flex-wrap: wrap; }
+.subscription-links a { font-weight: 500; font-size: 14px; opacity: 0.9; }
+.subscription-links a:hover { text-decoration: underline; }
+.last-action { font-size: 13px; opacity: 0.65; margin: 0 0 14px; }
+
+.social-links { display: flex; gap: 12px; margin-bottom: 18px; flex-wrap: wrap; }
+.social-links a {
+    width: 38px; height: 38px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    font-size: 16px;
+    transition: transform 0.3s, background 0.3s;
+}
+.social-links a:hover { transform: translateY(-3px); background: rgba(255,255,255,0.3); }
+
+.profile-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+/* ============================================================
+   FOLLOWERS / FOLLOWING
+   ============================================================ */
+.follow-page { max-width: 900px; margin: 0 auto; }
+.follow-subtitle { opacity: 0.75; margin-bottom: 24px; }
+.follow-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+}
+.follow-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 20px 12px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.follow-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+.follow-card img { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; }
+.follow-card span { font-weight: 500; font-size: 14px; word-break: break-word; }
+.back-link { margin-top: 10px; }
+.back-link a { opacity: 0.8; }
+.back-link a:hover { text-decoration: underline; }
+
+/* ============================================================
+   DASHBOARD
+   ============================================================ */
+.dashboard { max-width: 640px; margin: 0 auto; }
+.settings-form { padding: 26px; margin-bottom: 22px; }
+.settings-form h3 { display: flex; align-items: center; gap: 10px; }
+
+.avatar-upload { display: flex; align-items: center; gap: 20px; margin-bottom: 14px; flex-wrap: wrap; }
+.preview-avatar { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid rgba(255,255,255,0.3); }
+
+/* Превью текущего фонового изображения карточки профиля в личном кабинете */
+.preview-bg {
+    width: 100%;
+    max-width: 280px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 14px;
+    margin-bottom: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Цветовые пикеры в один горизонтальный ряд (компактной сеткой на узких
+   экранах — flex-wrap сам уводит лишние пикеры на новую строку) */
+.theme-colors-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px 20px;
+    margin-bottom: 8px;
+}
+/* Фиксированная ширина колонки — иначе длинная подпись ("Цвет текста на
+   кнопках" против, например, "Цвет фона") растягивает свой .theme-group
+   шире остальных, и весь ряд перестаёт помещаться в ширину формы: пятый
+   пикер переносится на отдельную строку. При фиксированной ширине длинная
+   подпись просто переносится на вторую строку текста внутри своей колонки,
+   а сама колонка остаётся такой же ширины, как у соседних. */
+.theme-colors-row .theme-group {
+    /* flex-колонка с центрированием — раньше подпись (блочный текст,
+       выравненный по левому краю) и круглый пикер (56px) были у́же своей
+       92px-колонки, из-за чего оба визуально «прилипали» к левому краю
+       вместо центра */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 0;
+    width: 92px;
+}
+.theme-colors-row .theme-group label {
+    min-height: 32px;
+    font-size: 12px;
+    line-height: 1.3;
+    text-align: center;
+}
+.theme-group { margin-bottom: 16px; }
+.theme-group input[type="color"] {
+    width: 56px; height: 56px;
+    border: none; border-radius: 50%;
+    cursor: pointer; padding: 0; background: transparent;
+}
+/* border-radius на самом <input> обрезает по кругу внешний контур, но в
+   Chrome/Edge внутри инпута рисуется ещё и свой прямоугольный "образец
+   цвета" (::-webkit-color-swatch) — без отдельного правила его углы
+   останутся квадратными и будут видны в уголках круга. */
+.theme-group input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+.theme-group input[type="color"]::-webkit-color-swatch { border: none; border-radius: 50%; }
+.theme-group input[type="color"]::-moz-color-swatch { border: none; border-radius: 50%; }
+
+/* Живое превью цветовой схемы (задание "Live preview для цветовой схемы") —
+   маленькая карточка, имитирующая градиентный фон страницы (primary -> bg) и
+   кнопку сайта; цвета обновляются JS'ом (initColorPreview() в main.js) при
+   каждом изменении любого пикера в форме, ещё до сохранения. */
+.theme-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 20px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    margin-bottom: 18px;
+    transition: background 0.15s;
+}
+.theme-preview-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    opacity: 0.6;
+}
+.theme-preview-text { margin: 0; font-size: 15px; }
+.theme-preview-btn {
+    border: none;
+    padding: 9px 22px;
+    border-radius: 40px;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: default;
+}
+
+.admin-panel { border: 1px solid rgba(255, 107, 107, 0.4); }
+.admin-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.admin-table th, .admin-table td { padding: 8px 10px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.12); }
+.btn-danger-small {
+    background: rgba(198, 40, 40, 0.5);
+    border: none; color: #fff;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.logout-link { display: inline-flex; margin-top: 6px; }
+
+/* ============================================================
+   МОДАЛЬНЫЕ ОКНА (пост + туториал)
+   ============================================================ */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 15, 25, 0.65);
+    backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 1000;
+}
+.modal-overlay[hidden] { display: none; }
+
+.modal {
+    position: relative;
+    max-width: 660px;
+    width: 100%;
+    max-height: 88vh;
+    overflow-y: auto;
+    padding: 28px;
+    background: rgba(30, 35, 55, 0.75) !important;
+}
+
+/* Модалка просмотра поста (.post-modal) — фон всегда светлый и текст
+   всегда тёмный, независимо от --text-color владельца поста. Раньше фон
+   был тёмно-синим, а текст наследовал цвет темы — если у владельца
+   профиля тёмный --text-color (подобранный под светлую карточку), на
+   тёмном фоне модалки он становился нечитаемым. Светлый фон + фиксированный
+   тёмный текст читаемы при любой теме. Ограничено классом .post-modal,
+   чтобы не задеть .tutorial-modal — там прогресс-точки и текст специально
+   рассчитаны на тёмный фон. */
+.post-modal {
+    background: rgba(250, 250, 252, 0.97) !important;
+}
+.post-modal,
+.post-modal .modal-post-header a,
+.post-modal .modal-post-text,
+.post-modal .modal-post-title,
+.post-modal .modal-post-date,
+.post-modal .like-btn,
+.post-modal .like-static {
+    color: #23233a !important;
+}
+.post-modal .like-btn .liked,
+.post-modal .like-btn .fas.liked { color: #ff6b6b !important; }
+.post-modal .modal-close {
+    background: rgba(0, 0, 0, 0.08);
+    color: #23233a;
+}
+.post-modal .modal-close:hover { background: rgba(0, 0, 0, 0.15); }
+
+.modal-close {
+    position: absolute;
+    top: 14px; right: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* padding-bottom компенсирует то, что символ "×" в большинстве шрифтов
+       визуально немного смещён вверх относительно центра строки */
+    padding: 0 0 2px;
+    background: rgba(255,255,255,0.15);
+    border: none;
+    color: #fff;
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+}
+.modal-close:hover { background: rgba(255,255,255,0.3); }
+
+.modal-post-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.modal-post-header img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; }
+.modal-post-header a { font-weight: 600; font-size: 16px; }
+.modal-post-date { display: block; font-size: 12px; opacity: 0.6; }
+.modal-post-image { width: 100%; border-radius: 16px; margin-bottom: 16px; height: auto; max-height: 80vh; object-fit: contain; display: block; /* убирает лишние отступы под картинкой */ }
+.modal-post-title { font-size: 20px; margin-bottom: 8px; }
+.modal-post-text {
+    font-size: 15px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    margin-bottom: 18px;
+    /* Переносим длинные слова/ссылки без пробелов, чтобы текст не вылезал за карточку */
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+.modal-post-footer { display: flex; align-items: center; gap: 14px; }
+.btn-icon {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 38px; height: 38px;
+    background: rgba(0, 0, 0, 0.06);
+    border: none; border-radius: 50%;
+    /* Иконки редактирования/удаления в модалке поста — фиксированный серый,
+       а не --text-color/--button-text-color: модалка (.post-modal) всегда
+       светлая независимо от темы владельца поста (см. правку из прошлого
+       раунда), поэтому и иконкам нужен свой, тоже независимый от темы, но
+       уже тёмный цвет, иначе на светлом фоне они были бы плохо видны. */
+    color: #6b6b7a; cursor: pointer; font-size: 14px;
+}
+.btn-icon:hover { background: rgba(0, 0, 0, 0.12); }
+.btn-icon-danger:hover { background: rgba(198,40,40,0.15); color: #c62828; }
+.inline-form { display: inline; }
+
+/* ============================================================
+   ТУТОРИАЛ (задание 2.7)
+   ============================================================ */
+.tutorial-modal { max-width: 440px; text-align: center; }
+.tutorial-progress { display: flex; justify-content: center; gap: 8px; margin-bottom: 22px; }
+.tutorial-dot { width: 9px; height: 9px; border-radius: 50%; background: rgba(255,255,255,0.3); transition: background 0.3s, transform 0.3s; }
+.tutorial-dot.active { background: #fff; transform: scale(1.3); }
+.tutorial-step { display: none; }
+.tutorial-step.active { display: block; animation: fadeIn 0.3s; }
+.tutorial-icon { font-size: 46px; margin-bottom: 14px; }
+.tutorial-step p { opacity: 0.85; line-height: 1.5; }
+.tutorial-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 24px; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ============================================================
+   404
+   ============================================================ */
+.error-page {
+    max-width: 480px;
+    margin: 60px auto;
+    padding: 50px 30px;
+    text-align: center;
+}
+.error-icon { font-size: 64px; margin-bottom: 16px; }
+.error-page h1 { font-size: 28px; }
+.error-page p { opacity: 0.8; margin-bottom: 26px; }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer {
+    margin-top: 40px;
+    padding: 24px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 22px;
+    font-size: 12px;
+    font-weight: 300;
+    opacity: 0.85;
+}
+.footer p { margin: 4px 0; }
+.footer a { text-decoration: underline; }
+
+/* ============================================================
+   АДАПТИВНОСТЬ (задание "Responsive design")
+   ============================================================ */
+@media (max-width: 1024px) {
+    /* На планшете дублируем правило и для .grid-small/.grid-medium/.grid-large —
+       иначе они выигрывают у обычного .posts-grid по специфичности (два класса
+       против одного) и адаптивность внутри медиа-запроса не сработает. */
+    .posts-grid,
+    .posts-grid.grid-medium { grid-template-columns: repeat(2, 1fr); }
+    .posts-grid.grid-small { grid-template-columns: repeat(3, 1fr); }
+    .posts-grid.grid-large { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+    .container { padding: 0 14px 30px; }
+    nav { justify-content: center; padding: 10px 14px; }
+    .nav-avatar { order: 1; }
+    .nav-center { order: 2; width: 100%; justify-content: center; }
+    .nav-right { order: 3; width: 100%; justify-content: center; }
+    nav a span { display: none; }
+    nav a { padding: 10px; font-size: 16px; }
+
+    .posts-grid,
+    .posts-grid.grid-small,
+    .posts-grid.grid-medium { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .posts-grid.grid-large { grid-template-columns: repeat(1, 1fr); gap: 14px; }
+    .profile-header { flex-direction: column; align-items: center; text-align: center; padding: 24px; }
+    .profile-info { min-width: 0; width: 100%; }
+    .profile-side { width: 100%; }
+    .profile-name-row, .stats, .subscription-links, .social-links, .profile-actions { justify-content: center; }
+    .slide { flex: 0 0 160px; height: 190px; }
+    .feed-controls { flex-direction: column; align-items: stretch; }
+    .modal { padding: 20px; }
+}
+
+@media (max-width: 560px) {
+    /* На узком экране один столбец для любого размера сетки — иначе
+       .grid-small (repeat(4,1fr)) выиграет по специфичности и сожмёт
+       карточки до нечитаемой ширины на телефоне. */
+    .posts-grid,
+    .posts-grid.grid-small,
+    .posts-grid.grid-medium,
+    .posts-grid.grid-large { grid-template-columns: 1fr; }
+    .follow-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+    h1 { font-size: 24px; }
+    .profile-avatar { width: 96px; height: 96px; }
+    .admin-table { display: block; overflow-x: auto; white-space: nowrap; }
+}

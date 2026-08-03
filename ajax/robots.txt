@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /includes/
+Disallow: /ajax/
+Disallow: /uploads/
+Disallow: /sql/
+Disallow: /dashboard.php
+
+Sitemap: http://profiles.local/sitemap.xml
