@@ -20,7 +20,7 @@ $avatarUrl = avatarSrc($user['avatar_url'] ?? null);
 // личный кабинет и т.д.), как и раньше. Гостю или незалогиненному владельцу —
 // цвета по умолчанию.
 $themeUser = $themeUser ?? $user ?? [];
-$primaryColor = $themeUser['primary_color'] ?? '#87ecd3';
+$primaryColor = '#FF00FF';
 $textColor = $themeUser['text_color'] ?? '#FFFFFF';
 $buttonColor = $themeUser['button_color'] ?? null;
 $bgColor = $themeUser['bg_color'] ?? null;
