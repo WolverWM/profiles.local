@@ -65,7 +65,7 @@ require_once 'includes/header.php';
 ?>
 
 <?php if (isset($_GET['created'])): ?>
-    <div class="alert success">✅ Пост опубликован!</div>
+    <div class="alert success">Пост опубликован!</div>
 <?php endif; ?>
 
 <?php if (!empty($sliderPosts)): ?>
@@ -81,9 +81,7 @@ require_once 'includes/header.php';
 </div>
 <?php endif; ?>
 
-<!-- Форма создания поста убрана с ленты по просьбе заказчика — публикация
-     теперь доступна только на странице своего профиля (profile.php),
-     чтобы не загромождать общую ленту. -->
+
 
 <div class="feed-controls">
     <div class="search-bar">

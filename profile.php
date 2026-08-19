@@ -92,7 +92,7 @@ require_once 'includes/header.php';
 ?>
 
 <?php if (isset($_GET['created'])): ?>
-    <div class="alert success">✅ Пост опубликован!</div>
+    <div class="alert success">Пост опубликован!</div>
 <?php endif; ?>
 
 <div class="profile-header" <?php if ($profileBgUrlAbs): ?>style="--profile-bg-image: url('<?php echo escape($profileBgUrlAbs); ?>');"<?php endif; ?>>
@@ -189,8 +189,8 @@ require_once 'includes/header.php';
         <h3><i class="fas fa-note-sticky"></i> Добавить текстовый блок</h3>
         <form method="POST" data-validate novalidate>
             <?php echo csrf_field(); ?>
-            <textarea name="block_content" placeholder="Заметка, которая появится между постами..." data-rule="required"></textarea>
-            <button type="submit" name="add_block">Добавить блок</button>
+            <textarea name="block_content" placeholder="Заметка, которая появится между постами только в вашем профиле. Не видна в ленте" data-rule="required"></textarea>
+            <button type="submit" name="add_block">Добавить заметку</button>
         </form>
     </div>
 <?php endif; ?>
