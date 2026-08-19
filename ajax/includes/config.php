@@ -14,7 +14,7 @@
 // Если MySQL в OpenServer не отвечает на 'localhost' — укажите имя модуля
 // MySQL из настроек OpenServer (вкладка "Модули"), например 'MySQL-8.4'.
 
-define('DB_HOST', 'localhost');
+define('DB_HOST', 'MySQL-8.4');
 define('DB_NAME', 'profiles_db');
 define('DB_USER', 'root');
 define('DB_PASS', '');
