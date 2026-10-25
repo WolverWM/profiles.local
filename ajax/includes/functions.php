@@ -321,8 +321,8 @@ function renderPostCard(array $p, bool $loggedIn, bool $draggable = false): stri
     if (!$imageOnly) {
         if (!empty($p['title'])) $html .= '<h3>' . escape($p['title']) . '</h3>';
         $content = (string)$p['content'];
-$excerpt = mb_substr($content, 0, 500, 'UTF-8');
-if (mb_strlen($content, 'UTF-8') > 500) {
+$excerpt = mb_substr($content, 0, 200, 'UTF-8');
+if (mb_strlen($content, 'UTF-8') > 200) {
     $excerpt .= '…';
 }
 $html .= '<p>' . escape($excerpt) . '</p>';
