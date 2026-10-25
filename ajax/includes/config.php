@@ -51,8 +51,8 @@ define('ALLOWED_IMAGE_TYPES', ['image/jpeg', 'image/png', 'image/gif', 'image/we
 define('ALLOWED_IMAGE_EXTENSIONS', ['jpg', 'jpeg', 'png', 'gif', 'webp']);
 
 // Фон карточки профиля — отдельные, более строгие ограничения по заданию:
-// максимум 2 МБ и без GIF (анимированный фон карточки был бы неуместен)
-define('MAX_PROFILE_BG_SIZE', 2 * 1024 * 1024); // 2 МБ
+// максимум 50 МБ и без GIF (анимированный фон карточки был бы неуместен)
+define('MAX_PROFILE_BG_SIZE', 50 * 1024 * 1024); // 50 МБ
 define('ALLOWED_PROFILE_BG_TYPES', ['image/jpeg', 'image/png', 'image/webp']);
 define('ALLOWED_PROFILE_BG_EXTENSIONS', ['jpg', 'jpeg', 'png', 'webp']);
 
