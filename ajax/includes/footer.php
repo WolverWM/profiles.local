@@ -37,7 +37,7 @@
             <div class="tutorial-step" data-step="2">
                 <div class="tutorial-icon">✏️</div>
                 <h2>Создавайте посты с текстом и изображениями</h2>
-                <p>Форма публикации доступна на главной странице и в вашем профиле.</p>
+                <p>Форма публикации доступна в вашем профиле.</p>
             </div>
             <div class="tutorial-step" data-step="3">
                 <div class="tutorial-icon">🎨</div>
